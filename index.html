@@ -32,6 +32,7 @@
     font-family:'Quicksand', sans-serif;
     font-weight:500;
     overflow-x:hidden;
+    padding-bottom:60px;
   }
   h1,h2,h3,.display{
     font-family:'Baloo 2', cursive;
@@ -83,13 +84,11 @@
   .brand{
     font-family:'Baloo 2', cursive; font-weight:800;
     color:var(--crimson); font-size:1.3rem; text-decoration:none;
-    display:flex; align-items:center; gap:.4rem;
+    display:flex; align-items:center; gap:.5rem;
     white-space:nowrap;
   }
-  .brand .halo-dot{
-    width:10px; height:10px; border-radius:50%;
-    background:var(--halo);
-    box-shadow:0 0 0 3px var(--petal-soft);
+  .brand .brand-logo{
+    height:38px; width:auto;
   }
   nav{
     display:flex; flex-wrap:wrap; gap:.35rem;
@@ -173,6 +172,43 @@
     box-shadow: inset 0 0 0 6px #fff;
   }
   @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* ---------- cute wings flanking framed photos ---------- */
+  .winged-frame{ position:relative; display:inline-block; }
+  .winged-frame::before, .winged-frame::after{
+    content:"";
+    position:absolute; top:36%; width:32%; aspect-ratio:1.6/1;
+    background:url('img/wing.svg') no-repeat center/contain;
+    z-index:4; pointer-events:none;
+    filter: drop-shadow(0 6px 10px rgba(58,15,22,.16));
+  }
+  .winged-frame::before{
+    left:-13%; transform:scaleX(-1) rotate(8deg);
+    animation: wingflap-l 4s ease-in-out infinite;
+  }
+  .winged-frame::after{
+    right:-13%; transform:rotate(-8deg);
+    animation: wingflap-r 4s ease-in-out infinite; animation-delay:.4s;
+  }
+  @keyframes wingflap-l{
+    0%,100%{ transform:scaleX(-1) rotate(8deg); }
+    50%{ transform:scaleX(-1) rotate(2deg); }
+  }
+  @keyframes wingflap-r{
+    0%,100%{ transform:rotate(-8deg); }
+    50%{ transform:rotate(-2deg); }
+  }
+
+  /* ---------- fixed cloud band across the bottom of every page ---------- */
+  .cloud-band{
+    position:fixed; left:0; right:0; bottom:0; width:100%;
+    height:90px;
+    z-index:20; pointer-events:none;
+  }
+  .cloud-band img{ width:100%; height:100%; display:block; }
+  @media (max-width:600px){
+    .cloud-band{ height:56px; }
+  }
 
   /* ---------- HOME ---------- */
   .home-hero{
@@ -272,6 +308,10 @@
 
   /* ---------- PORTFOLIO ---------- */
   .perf-list{ margin-top:2.5rem; display:flex; flex-direction:column; gap:1.5rem; }
+  .portfolio-collage{
+    margin-top:1.8rem; width:100%; max-width:520px;
+    border-radius:18px; box-shadow:var(--shadow);
+  }
   .perf-row{
     display:grid; grid-template-columns:170px 1fr; gap:1.5rem;
     background:#fff; border-radius:18px; box-shadow:var(--shadow); overflow:hidden;
@@ -310,10 +350,11 @@
 <body>
 
 <div class="sparkle-field" id="sparkleField" aria-hidden="true"></div>
+<div class="cloud-band" aria-hidden="true"><img src="img/clouds.svg" alt=""></div>
 
 <header>
   <div class="nav-wrap">
-    <a class="brand" href="#home" onclick="showTab('home')"><span class="halo-dot"></span>ABSOLUTE AiDOL</a>
+    <a class="brand" href="#home" onclick="showTab('home')"><img class="brand-logo" src="img/main_logo.png" alt="">ABSOLUTE AiDOL</a>
     <nav id="tabNav">
       <button data-tab="home">Home</button>
       <button data-tab="socials">Socials</button>
@@ -333,12 +374,14 @@
     <section id="home" class="panel">
       <div class="home-hero">
         <div class="hero-photo-wrap">
-          <div class="halo-frame">
-            <img src="img/portrait-1.jpg" alt="ABSOLUTE AiDOL smiling in a red and white idol outfit with devil horns">
+          <div class="winged-frame">
+            <div class="halo-frame">
+              <img src="img/main_portrait.jpg" alt="ABSOLUTE AiDOL smiling in a red and white idol outfit with devil horns">
+            </div>
           </div>
-          <div class="float-polaroid p1"><img src="img/portrait-3.jpg" alt="ABSOLUTE AiDOL close-up, peace sign"></div>
-          <div class="float-polaroid p2"><img src="img/portrait-4.jpg" alt="ABSOLUTE AiDOL smiling, hand on cheek"></div>
-          <div class="float-polaroid p3"><img src="img/portrait-2.jpg" alt="ABSOLUTE AiDOL looking over her shoulder, smiling"></div>
+          <div class="float-polaroid p1"><img src="img/PortraitCLOSE_2.jpg" alt="ABSOLUTE AiDOL close-up, playful claw-hands pose"></div>
+          <div class="float-polaroid p2"><img src="img/gallery1.jpg" alt="ABSOLUTE AiDOL performing on stage"></div>
+          <div class="float-polaroid p3"><img src="img/portrait2.jpg" alt="ABSOLUTE AiDOL looking over her shoulder, smiling"></div>
         </div>
         <div class="home-copy">
           <p class="eyebrow">Seattle · Indie J-Pop Idol</p>
@@ -383,8 +426,10 @@
     <!-- ============ ARTIST ============ -->
     <section id="artist" class="panel">
       <div class="artist-hero">
-        <div class="halo-frame">
-          <img src="img/portrait-3.jpg" alt="ABSOLUTE AiDOL portrait">
+        <div class="winged-frame">
+          <div class="halo-frame">
+            <img src="img/Portrait_2.jpg" alt="ABSOLUTE AiDOL portrait">
+          </div>
         </div>
         <div>
           <p class="eyebrow">The Artist</p>
@@ -406,10 +451,10 @@
       </div>
 
       <div class="gallery">
-        <img src="img/portrait-1.jpg" alt="ABSOLUTE AiDOL, full outfit, pointing and smiling">
-        <img src="img/portrait-2.jpg" alt="ABSOLUTE AiDOL looking over her shoulder">
-        <img src="img/portrait-3.jpg" alt="ABSOLUTE AiDOL close-up peace sign">
-        <img src="img/portrait-4.jpg" alt="ABSOLUTE AiDOL close-up, hand on cheek">
+        <img src="img/main_portrait.jpg" alt="ABSOLUTE AiDOL, full outfit, hands on hips">
+        <img src="img/gallery1.jpg" alt="ABSOLUTE AiDOL performing on stage">
+        <img src="img/gallery2.jpg" alt="ABSOLUTE AiDOL kneeling on stage with microphone">
+        <img src="img/PortraitCLOSE_2.jpg" alt="ABSOLUTE AiDOL close-up, playful pose">
       </div>
     </section>
 
@@ -420,8 +465,7 @@
 
       <div class="music-card" style="margin-top:1.5rem;">
         <div class="music-cover">
-          <!-- EDIT ME: replace img/logo.png with your actual single cover art file -->
-          <img src="img/logo.png" alt="AiDOL WARS! single cover art" style="width:260px;">
+          <img src="img/SINGLE_ART.png" alt="AiDOL WARS! single cover art" style="width:260px;">
         </div>
         <div class="music-info">
           <span class="release-pill">Releasing 4.17 · Streaming everywhere</span>
@@ -448,10 +492,12 @@
       <h2>Portfolio</h2>
       <p class="lede">A running list of performances, appearances, and sets. Replace the entries below with your own lineup.</p>
 
+      <img class="portfolio-collage" src="img/main_collage.jpg" alt="Collage of ABSOLUTE AiDOL performing on stage">
+
       <!-- EDIT ME: replace each row's image, title, location, and date with real performances -->
       <div class="perf-list">
         <div class="perf-row">
-          <img src="img/portrait-1.jpg" alt="Performance photo">
+          <img src="img/gallery1.jpg" alt="Performance photo">
           <div class="perf-text">
             <p class="date">Convention Name · City, State</p>
             <h3>Set title or performance name</h3>
@@ -459,7 +505,7 @@
           </div>
         </div>
         <div class="perf-row">
-          <img src="img/portrait-2.jpg" alt="Performance photo">
+          <img src="img/gallery2.jpg" alt="Performance photo">
           <div class="perf-text">
             <p class="date">Convention Name · City, State</p>
             <h3>Set title or performance name</h3>
@@ -467,7 +513,7 @@
           </div>
         </div>
         <div class="perf-row">
-          <img src="img/portrait-4.jpg" alt="Performance photo">
+          <img src="img/portrait2.jpg" alt="Performance photo">
           <div class="perf-text">
             <p class="date">Convention Name · City, State</p>
             <h3>Set title or performance name</h3>
@@ -494,8 +540,10 @@
     <!-- ============ CONTACT ============ -->
     <section id="contact" class="panel">
       <div class="contact-wrap">
-        <div class="halo-frame">
-          <img src="img/portrait-4.jpg" alt="ABSOLUTE AiDOL portrait">
+        <div class="winged-frame">
+          <div class="halo-frame">
+            <img src="img/Portrait_2.jpg" alt="ABSOLUTE AiDOL portrait">
+          </div>
         </div>
         <div>
           <p class="eyebrow">Get In Touch</p>
